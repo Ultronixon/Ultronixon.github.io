@@ -1,0 +1,421 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="generator" content="Hexo 4.2.0"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>C primer plus笔记四 - Ultronixon&#039;s Blog</title><meta description="第四章 字符串和格式化输入输出     4.1 示例程序 4.2 字符串 4.3 常量和C预处理 4.4printf()函数 4.5 scanf（）函数 4.6 printf和scanf的*修饰符"><meta property="og:type" content="blog"><meta property="og:title" content="C primer plus笔记四"><meta property="og:url" content="http://yoursite.com/2020/05/06/C-primer-plus-chapter4/"><meta property="og:site_name" content="Ultronixon&#039;s Blog"><meta property="og:description" content="第四章 字符串和格式化输入输出     4.1 示例程序 4.2 字符串 4.3 常量和C预处理 4.4printf()函数 4.5 scanf（）函数 4.6 printf和scanf的*修饰符"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="http://yoursite.com/img/cyber2.jpg"><meta property="article:published_time" content="2020-05-06T15:08:01.000Z"><meta property="article:modified_time" content="2020-05-06T16:11:22.961Z"><meta property="article:author" content="tll"><meta property="article:tag" content="C Primer Plus"><meta property="twitter:card" content="summary"><meta property="twitter:image" content="/img/cyber2.jpg"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://yoursite.com/2020/05/06/C-primer-plus-chapter4/"},"headline":"Ultronixon's Blog","image":["http://yoursite.com/img/cyber.jpg"],"datePublished":"2020-05-06T15:08:01.000Z","dateModified":"2020-05-06T16:11:22.961Z","author":{"@type":"Person","name":"tll"},"description":"第四章 字符串和格式化输入输出     4.1 示例程序 4.2 字符串 4.3 常量和C预处理 4.4printf()函数 4.5 scanf（）函数 4.6 printf和scanf的*修饰符"}</script><link rel="canonical" href="http://yoursite.com/2020/05/06/C-primer-plus-chapter4/"><link rel="icon" href="/img/cyber.jpg"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/monokai.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oxanium:wght@300;400;600&amp;family=Roboto+Mono"><link rel="stylesheet" href="/css/cyberpunk.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css"><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/seismic.jpg" alt="Ultronixon&#039;s Blog" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/tags">Tags</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/Ultronixon"><i class="fab fa-github"></i></a><a class="navbar-item search" title="Suche" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta size-small is-uppercase level is-mobile"><div class="level-left"><time class="level-item" dateTime="2020-05-06T15:08:01.000Z" title="2020-05-06T15:08:01.000Z">2020-05-06</time><span class="level-item">25 分钟 lesen (Über 3767 Worte)</span></div></div><h1 class="title is-3 is-size-4-mobile">C primer plus笔记四</h1><div class="content"><p><img src="https://gitee.com//ultronixon/img/raw/master/img/timg-1588523019372.jpg" alt></p>
+<h1><span id="di-si-zhang-zi-fu-chuan-he-ge-shi-hua-shu-ru-shu-chu">第四章 字符串和格式化输入输出</span><a href="#di-si-zhang-zi-fu-chuan-he-ge-shi-hua-shu-ru-shu-chu" class="header-anchor">#</a></h1><div class="toc">
+
+<!-- toc -->
+
+<ul>
+<li><a href="#4-1-shi-li-cheng-xu">4.1 示例程序</a></li>
+<li><a href="#4-2-zi-fu-chuan">4.2 字符串</a></li>
+<li><a href="#4-3-chang-liang-he-c-yu-chu-li">4.3 常量和C预处理</a></li>
+<li><a href="#4-4-printf-han-shu">4.4<code>printf()</code>函数</a></li>
+<li><a href="#4-5-scanf-han-shu">4.5 scanf（）函数</a></li>
+<li><a href="#4-6-printf-he-scanf-de-xiu-shi-fu">4.6 printf和scanf的*修饰符</a></li>
+</ul>
+<!-- tocstop -->
+
+</div>
+<a id="more"></a>
+
+<h3><span id="4-1-shi-li-cheng-xu">4.1 示例程序</span><a href="#4-1-shi-li-cheng-xu" class="header-anchor">#</a></h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// talkback.c -- nosy, informative program </span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;      // 提供strlen()函数原型</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> DENSITY 62.4     <span class="comment">// human density in lbs per cu ft</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">float</span> weight, volume;</span><br><span class="line">    <span class="keyword">int</span> <span class="built_in">size</span>, letters;</span><br><span class="line">    <span class="keyword">char</span> name[<span class="number">40</span>];         <span class="comment">// name is an array of 40 chars</span></span><br><span class="line"></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"Hi! What's your first name?\n"</span>);</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%s"</span>, name);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"%s, what's your weight in pounds?\n"</span>, name);</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%f"</span>, &amp;weight);</span><br><span class="line">    <span class="built_in">size</span> = <span class="keyword">sizeof</span> name;</span><br><span class="line">    letters = <span class="built_in">strlen</span>(name);</span><br><span class="line">    volume = weight / DENSITY;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"Well, %s, your volume is %2.2f cubic feet.\n"</span>,</span><br><span class="line">            name, volume);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"Also, your first name has %d letters,\n"</span>,</span><br><span class="line">            letters);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"and we have %d bytes to store it in.\n"</span>, <span class="built_in">size</span>);</span><br><span class="line">  </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>scanf()</code>的变量是数组的时候不需要前面加<code>&amp;</code>，数组名就是数组首地址。</p>
+<h3><span id="4-2-zi-fu-chuan">4.2 字符串</span><a href="#4-2-zi-fu-chuan" class="header-anchor">#</a></h3><ul>
+<li>字符串存储末尾有空字符<code>\0</code>表示字符串结束，所以实际存储的长度要比字符串多<code>1</code>；</li>
+<li>单个字符存储在<code>char</code>变量里，字符串存储在数组里；</li>
+<li><code>%s</code>转换说明，<code>scanf()</code>遇到<strong>空格、制表符和换行符</strong>就停止读入，因此只读取字符串中的一个单词，而不是一整句，其他函数如<code>fget()</code>可以读取一句。</li>
+<li><code>strlen()</code>函数显示字符串的字符个数，<strong>不包括结尾的空字符</strong>。</li>
+<li><code>sizeof</code>函数在计算字符变量的时候，<strong>把结尾的空字符也计算在内</strong>。</li>
+<li>为了适应不同系统<code>sizeof()</code>和<code>strlen()</code>函数的返回值类型（有可能是<code>unsigned int</code>,<code>unsigned long</code>. <code>unsigned long long</code>), 提供程序的可移植性，C99，C11专门为<code>sizeof(),strlen()</code>函数添加了转换说明符<code>%zd</code>，有的编译器并不支持这一特性，可以用<code>%u,%lu</code>代替。</li>
+<li><code>sizeof()</code>参数是类型时必须用括号，如果是特点量，可以不用括号，如<code>sizeof name</code>,<code>sizeof 5.225</code>,但是为了代码的可读性还是都有括号的好。</li>
+</ul>
+<h3><span id="4-3-chang-liang-he-c-yu-chu-li">4.3 常量和C预处理</span><a href="#4-3-chang-liang-he-c-yu-chu-li" class="header-anchor">#</a></h3><ul>
+<li><code>#define</code>可以声明常量，<strong>按照C的惯例，声明的常量要用大写字母表示。</strong></li>
+<li>C90 添加了<code>const</code>关键字，限定了一个变量为只读。<strong>const比#define更加灵活，可以在变量使用之前声明。</strong></li>
+<li>明示常量（<code>limits.h,float.h</code>)</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th align="left">明示常量</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>CHAR_BIT</code></td>
+<td>char类型的位数</td>
+</tr>
+<tr>
+<td align="left"><code>CHAR_MAX</code></td>
+<td>char类型的最大值</td>
+</tr>
+<tr>
+<td align="left"><code>CHAR_MIN</code></td>
+<td>char类型的最小值</td>
+</tr>
+<tr>
+<td align="left"><code>SCHAR_MAX</code></td>
+<td>signed char类型的最大值</td>
+</tr>
+<tr>
+<td align="left"><code>SCHAR_MIN</code></td>
+<td>signed char类型的最小值</td>
+</tr>
+<tr>
+<td align="left"><code>UCHAR_MAX</code></td>
+<td>unsigned char类型的最大值</td>
+</tr>
+<tr>
+<td align="left"><code>SHRT_MAX</code></td>
+<td>short类型最大值</td>
+</tr>
+<tr>
+<td align="left"><code>SHRT_MIN</code></td>
+<td>short类型最小值</td>
+</tr>
+<tr>
+<td align="left"><code>USHRT_MAX</code></td>
+<td>unsigned short最大值</td>
+</tr>
+<tr>
+<td align="left"><code>INT_MAX</code></td>
+<td>int类型最大值</td>
+</tr>
+<tr>
+<td align="left"><code>INT_MIN</code></td>
+<td>int类型最小值</td>
+</tr>
+<tr>
+<td align="left"><code>UINT_MAX</code></td>
+<td>unsigned int类型最大值</td>
+</tr>
+<tr>
+<td align="left"><code>LONG_MAX</code></td>
+<td>long类型最大值</td>
+</tr>
+<tr>
+<td align="left"><code>LONG_MIN</code></td>
+<td>long类型最小值</td>
+</tr>
+<tr>
+<td align="left"><code>ULONG_MAX</code></td>
+<td>unsigned long类型最大值</td>
+</tr>
+<tr>
+<td align="left"><code>LLONG_MAX</code></td>
+<td>long long类型最大值</td>
+</tr>
+<tr>
+<td align="left"><code>LLONG_MIN</code></td>
+<td>long long最小值</td>
+</tr>
+<tr>
+<td align="left"><code>ULLONG_MAX</code></td>
+<td>unsigned long long最大值</td>
+</tr>
+</tbody></table>
+<p>上面是<code>limits.h</code>中的一些明示常量。</p>
+<p>下面是<code>floats.h</code>中的一些明示常量，表示<code>float</code>和<code>double</code>类型的精度。</p>
+<table>
+<thead>
+<tr>
+<th>明示常量</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>FLT_MANT_DIG</code></td>
+<td>float类型的尾数位数</td>
+</tr>
+<tr>
+<td><code>FLT_DIG</code></td>
+<td>float类型的最少的有效数字位数（十进制）</td>
+</tr>
+<tr>
+<td><code>FLT_MIN_10_EXP</code></td>
+<td>带全部有效数字的float 类型的最小负指数（以10位底）</td>
+</tr>
+<tr>
+<td><code>FLT_MAX_10_EXP</code></td>
+<td>float类型的最大正指数（以10为底）</td>
+</tr>
+<tr>
+<td><code>FLT_MIN</code></td>
+<td>保留全部进度的float类型的最小正数</td>
+</tr>
+<tr>
+<td><code>FLT_MAX</code></td>
+<td>float类型的最大正数</td>
+</tr>
+<tr>
+<td><code>FLT_EPSLION</code></td>
+<td>1.00和比1.00大的最小float类型值之间的插值</td>
+</tr>
+</tbody></table>
+<p>下面看看我的电脑以上明示常量的情况：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//defines.c---ʹ打印limits.h和float.h中的一些明示常量</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;limits.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;float.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"Some int. number limits for this system:\n"</span>);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"-------------------------------------------\n"</span>);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"CHAR_BIT:\t%d\n"</span>,CHAR_BIT);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"CHAR_MAX:\t%d\n"</span>, CHAR_MAX);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"CHAR_MIN:\t%d\n"</span>, CHAR_MIN);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"SCHAR_MAX:\t%d\n"</span>, SCHAR_MAX);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"SCHAR_MIN:\t%d\n"</span>, SCHAR_MIN);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"UCHAR_MAX:\t%d\n"</span>, UCHAR_MAX);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"INT_MAX:\t%d\n"</span>, INT_MAX);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"INT_MIN:\t%d\n"</span>, INT_MIN);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"UINT_MAX:\t%u\n"</span>, UINT_MAX);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"LONG_MIN:\t%ld\n"</span>, LONG_MIN);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"LONG_MAX:\t%ld\n"</span>, LONG_MAX);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"ULONG_MAX:\t%lu\n"</span>, ULONG_MAX);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"LLONG_MAX:\t%lld\n"</span>, LLONG_MAX);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"LLONG_MIN:\t%lld\n"</span>, LLONG_MIN);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"ULLONG_MAX:\t%llu\n"</span>, ULLONG_MAX);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"Some float number limits for this system:\n"</span>);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"-------------------------------------------\n"</span>);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"FLT_MANT_DIG:\t%d\n"</span>,FLT_MANT_DIG);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"FLT_DIG:\t%d\n"</span>,FLT_DIG);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"FLT_MIN_10_EXP:\t%d\n"</span>,FLT_MIN_10_EXP);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"FLT_MAX_10_EXP:\t%d\n"</span>,FLT_MAX_10_EXP);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"FLT_MIN:\t%f\n"</span>,FLT_MIN);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"FLT_MAX:\t%f\n"</span>,FLT_MAX);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"FLT_EPSLION:\t%f\n"</span>,FLT_EPSILON);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>下面是我电脑上的输出：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">Some <span class="keyword">int</span>. number limits <span class="keyword">for</span> <span class="keyword">this</span> system:</span><br><span class="line">-------------------------------------------</span><br><span class="line">CHAR_BIT:       <span class="number">8</span></span><br><span class="line">CHAR_MAX:       <span class="number">127</span></span><br><span class="line">CHAR_MIN:       <span class="number">-128</span></span><br><span class="line">SCHAR_MAX:      <span class="number">127</span></span><br><span class="line">SCHAR_MIN:      <span class="number">-128</span></span><br><span class="line">UCHAR_MAX:      <span class="number">255</span></span><br><span class="line">INT_MAX:        <span class="number">2147483647</span></span><br><span class="line">INT_MIN:        <span class="number">-2147483648</span></span><br><span class="line">UINT_MAX:       <span class="number">4294967295</span></span><br><span class="line">LONG_MIN:       <span class="number">-2147483648</span></span><br><span class="line">LONG_MAX:       <span class="number">2147483647</span></span><br><span class="line">ULONG_MAX:      <span class="number">4294967295</span></span><br><span class="line">LLONG_MAX:      <span class="number">9223372036854775807</span></span><br><span class="line">LLONG_MIN:      <span class="number">-9223372036854775808</span></span><br><span class="line">ULLONG_MAX:     <span class="number">18446744073709551615</span></span><br><span class="line">Some <span class="keyword">float</span> number limits <span class="keyword">for</span> <span class="keyword">this</span> system:</span><br><span class="line">-------------------------------------------</span><br><span class="line">FLT_MANT_DIG:   <span class="number">24</span></span><br><span class="line">FLT_DIG:        <span class="number">6</span></span><br><span class="line">FLT_MIN_10_EXP: <span class="number">-37</span></span><br><span class="line">FLT_MAX_10_EXP: <span class="number">38</span></span><br><span class="line">FLT_MIN:        <span class="number">0.000000</span></span><br><span class="line">FLT_MAX:        <span class="number">340282346638528860000000000000000000000.000000</span></span><br><span class="line">FLT_EPSLION:    <span class="number">0.000000</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3><span id="4-4printf-han-shu">4.4<code>printf()</code>函数</span><a href="#4-4printf-han-shu" class="header-anchor">#</a></h3><h4><span id="zhuan-yi-shuo-ming">转义说明</span><a href="#zhuan-yi-shuo-ming" class="header-anchor">#</a></h4><p>下表示<code>printf()</code>函数转义说明及其打印的输出结果：</p>
+<table>
+<thead>
+<tr>
+<th align="center">转义说明</th>
+<th>输出</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><code>%a</code></td>
+<td>浮点数、十六进制数和p计数法（c99/c11)</td>
+</tr>
+<tr>
+<td align="center"><code>%A</code></td>
+<td>浮点数、十六进制数和p计数法（c99/c11)</td>
+</tr>
+<tr>
+<td align="center"><code>%c</code></td>
+<td>单个字符</td>
+</tr>
+<tr>
+<td align="center"><code>%d</code></td>
+<td>有符号十进制整数</td>
+</tr>
+<tr>
+<td align="center"><code>%e</code></td>
+<td>浮点数，e计数法</td>
+</tr>
+<tr>
+<td align="center"><code>%E</code></td>
+<td>浮点数，e计数法</td>
+</tr>
+<tr>
+<td align="center"><code>%f</code></td>
+<td>浮点数，十进制计数法</td>
+</tr>
+<tr>
+<td align="center"><code>%g</code></td>
+<td>根据值的不同，自动选择<code>%f</code>或者<code>%e</code>，<strong><code>%e</code>格式用于指数小于-4或者大于等于精度时</strong></td>
+</tr>
+<tr>
+<td align="center"><code>%G</code></td>
+<td>根据值的不同，自动选择<code>%f</code>或者<code>%E</code>,<code>%E</code><strong>格式用于指数小于-4或者大于等于精度时</strong></td>
+</tr>
+<tr>
+<td align="center"><code>%i</code></td>
+<td>有符号十进制整数（与<code>%d</code>相同）</td>
+</tr>
+<tr>
+<td align="center"><code>%o</code></td>
+<td>无符号八进制整数</td>
+</tr>
+<tr>
+<td align="center"><code>%p</code></td>
+<td>指针</td>
+</tr>
+<tr>
+<td align="center"><code>%s</code></td>
+<td>字符串</td>
+</tr>
+<tr>
+<td align="center"><code>%u</code></td>
+<td>无符号十进制整数</td>
+</tr>
+<tr>
+<td align="center"><code>%x</code></td>
+<td>无符号十六进制整数，<code>0f</code>开头</td>
+</tr>
+<tr>
+<td align="center"><code>%X</code></td>
+<td>无符号十六进制整数，<code>0F</code>开头</td>
+</tr>
+<tr>
+<td align="center"><code>%%</code></td>
+<td>打印一个<code>%</code></td>
+</tr>
+</tbody></table>
+<h4><span id="xiu-shi-fu">修饰符</span><a href="#xiu-shi-fu" class="header-anchor">#</a></h4><p>在转义说明的基础上，通常需要对格式进行 修饰，如定义位数，对齐等，下标时转义说明修饰符的含义：</p>
+<table>
+<thead>
+<tr>
+<th>修饰符</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>-</code></td>
+<td>可以不使用或者使用多个标记。<code>-</code>表示左对齐</td>
+</tr>
+<tr>
+<td><code>+</code></td>
+<td>表示带符号的数，正数前面+，负数-</td>
+</tr>
+<tr>
+<td>空格</td>
+<td>带符号，正数为空格，负数-（正数用空格代替+）</td>
+</tr>
+<tr>
+<td><code>#</code></td>
+<td>把结果转换成另外一种计数形式，如果是<code>%o</code>，就以<code>0</code>前缀，<code>%x</code>,就以<code>0x</code>前缀，<code>%X</code>,就以<code>0X</code>前缀 ；对于所有浮点格式，<code>#</code>保证了及时后面没有任何数字，也会打印一位小数点字符；对于<code>%g</code>和<code>%G</code>,防止结果后面的<code>0</code>被删除</td>
+</tr>
+<tr>
+<td><code>0</code></td>
+<td>对于数值格式，用前导0代替空格填充字段宽度，对于整数格式，如果出现标记或者指定精度，则忽略该标记</td>
+</tr>
+<tr>
+<td><code>.数字</code></td>
+<td>表示精度。对于<code>%f,%e,%E</code>表示小数点右边打印位数；对于<code>%g,%G</code>表示有效数字的最大位数；对于<code>%s</code>表示打印字符的最大数量；对于整数表示打印整数的最小位数，可以用前导0满足打印位数；只使用<code>.</code>,则前后跟随一个0.</td>
+</tr>
+<tr>
+<td><code>h</code></td>
+<td>和整数转换一起用，表示<code>short int</code>或者<code>unsigned short int</code>类型值，<code>%hd</code>,<code>%hu</code></td>
+</tr>
+<tr>
+<td><code>hh</code></td>
+<td>跟整数转换一起用，表示<code>signed char</code>或者<code>unsigned char</code>类型的值</td>
+</tr>
+<tr>
+<td><code>j</code></td>
+<td>和整数转换一起用，表示<code>intmax_t</code>和<code>uintmax_t</code>类型的值（该类型在<code>stdint.h</code>中)</td>
+</tr>
+<tr>
+<td><code>l</code></td>
+<td>和整数转换说明一起用，表示<code>long int</code>或者<code>unsigned long int</code>类型，如：<code>%ld, %8lu</code></td>
+</tr>
+<tr>
+<td><code>ll</code></td>
+<td>和整数转换说明一起用，表示<code>long long int</code>或者<code>unsigned long long int</code>类型，如：<code>%lld, %8llu</code>（c99）</td>
+</tr>
+<tr>
+<td><code>L</code></td>
+<td>和浮点转换说明一起，表示<code>long double</code>类型</td>
+</tr>
+<tr>
+<td><code>t</code></td>
+<td>和整数转换说明一起，表示<code>ptrdiff_t</code>类型，即两个指针的插值类型（c99）</td>
+</tr>
+<tr>
+<td><code>z</code></td>
+<td>和整数转换一起，表示<code>size_t</code>类型的值，<code>size_t</code>是<code>sizeof()</code>的返回类型（c99）</td>
+</tr>
+</tbody></table>
+<ul>
+<li>C标准值规定了<code>sizeof()</code>返回的是无符号类型，到时不同系统，可能返回的类型不同，为了代码可移植性，c99在<code>stdio.h</code>中用<code>size_t</code>定义系统使用<code>sizeof()</code>返回的类型，并用修饰符<code>z</code>打印它。</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//整数打印实例</span></span><br><span class="line"><span class="comment">/* width.c -- field widths */</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> PAGES 931</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"*%d*\n"</span>, PAGES);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"*%2d*\n"</span>, PAGES); <span class="comment">//最少打印2位，超出范围则忽略</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"*%10d*\n"</span>, PAGES);<span class="comment">//默认右对齐</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"*%-10d*\n"</span>, PAGES);<span class="comment">//负号左对齐</span></span><br><span class="line">  </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">*<span class="number">931</span>*            <span class="comment">//最少打印2位，超出范围则忽略</span></span><br><span class="line">*<span class="number">931</span>*            <span class="comment">//最少打印2位，超出范围则忽略</span></span><br><span class="line">*       <span class="number">931</span>*     <span class="comment">//默认右对齐</span></span><br><span class="line">*<span class="number">931</span>       *     <span class="comment">//负号左对齐</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//floats.c--一些浮点型修饰符的组合</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">double</span> RENT=<span class="number">3852.99</span>;<span class="comment">//const 变量（只读）</span></span><br><span class="line"></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"*%f*\n"</span>,RENT);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"*%e*\n"</span>,RENT);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"*%4.2f*\n"</span>,RENT);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"*%3.1f*\n"</span>,RENT);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"*%10.3f*\n"</span>,RENT);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"*%10.3E*\n"</span>,RENT);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"*%+4.2f*\n"</span>,RENT);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"*%010.2f*\n"</span>,RENT);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//运行结果</span></span><br><span class="line">*<span class="number">3852.990000</span>*        <span class="comment">//默认打印6位小数</span></span><br><span class="line">*<span class="number">3.852990e+003</span>*      </span><br><span class="line">*<span class="number">3852.99</span>*            <span class="comment">//最小字段宽度4，打印2位小数</span></span><br><span class="line">*<span class="number">3853.0</span>*             <span class="comment">//最小字段宽度3，打印1位小数</span></span><br><span class="line">*  <span class="number">3852.990</span>*         <span class="comment">//最小字段宽度10，打印3位小数</span></span><br><span class="line">*<span class="number">3.853E+003</span>*</span><br><span class="line">*+<span class="number">3852.99</span>*           <span class="comment">//带符号</span></span><br><span class="line">*<span class="number">0003852.99</span>*         <span class="comment">//前导补0</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//flags.c---演示一些格式标记</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"%x  %X  %#x\n"</span>,<span class="number">31</span>,<span class="number">31</span>,<span class="number">31</span>);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"**%d**% d**% d**\n"</span>,<span class="number">42</span>,<span class="number">42</span>,<span class="number">-42</span>);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"**%5d**%5.3d**%05d**%05.3d**\n"</span>,<span class="number">6</span>,<span class="number">6</span>,<span class="number">6</span>,<span class="number">6</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//运行结果</span></span><br><span class="line"><span class="number">1f</span>  <span class="number">1F</span>  <span class="number">0x1f</span></span><br><span class="line">**<span class="number">42</span>** <span class="number">42</span>**<span class="number">-42</span>**<span class="comment">//%d前面加一个空格，如果是正数，则加一个空格，如果是负数，则不生成空格，用负号占位</span></span><br><span class="line">**    <span class="number">6</span>**  <span class="number">006</span>**<span class="number">00006</span>**  <span class="number">006</span>**<span class="comment">//0和格式符同时出现时，宽度格式符起作用</span></span><br></pre></td></tr></table></figure>
+
+<h4><span id="zhuan-huan-shuo-ming-de-yi-yi">转换说明的意义</span><a href="#zhuan-huan-shuo-ming-de-yi-yi" class="header-anchor">#</a></h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//intconv.c--一些不匹配的整数转换</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> PAGES 336</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> WORDS 65618</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    short num=PAGES;</span><br><span class="line">    short mnum=-PAGES;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"num as short and unsigned short:%hd %hu\n"</span>,num,num);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"-num as short and unsigned shot:%hd %hu\n"</span>,mnum,mnum);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"num ans int and char:%d %c\n"</span>,num,num);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"WORDS as int, short, and char:%d %hd %c\n"</span>,WORDS,WORDS,WORDS);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//运行结果</span></span><br><span class="line">num as short <span class="keyword">and</span> <span class="keyword">unsigned</span> short:<span class="number">336</span> <span class="number">336</span></span><br><span class="line">-num as short <span class="keyword">and</span> <span class="keyword">unsigned</span> shot:<span class="number">-336</span> <span class="number">65200</span><span class="comment">//系统使用==二进制补位==来表示有符号的整数，其中</span></span><br><span class="line"><span class="comment">//65535表示-1,65534表示-2，以此类推。所以不同的类型一个数可以解释出不同的结果。</span></span><br><span class="line">num ans <span class="keyword">int</span> <span class="keyword">and</span> <span class="keyword">char</span>:<span class="number">336</span> P<span class="comment">//超出范围的char类型，按256取模，余数表示的就是char类型字符</span></span><br><span class="line">WORDS as <span class="keyword">int</span>, short, <span class="keyword">and</span> <span class="keyword">char</span>:<span class="number">65618</span> <span class="number">82</span> R<span class="comment">//short表示int的时候，只取int的最后2个字节，其实</span></span><br><span class="line"><span class="comment">//就是按65536取模</span></span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//floatconv.c---不匹配的浮点转换</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">float</span> n1=<span class="number">3.0</span>;</span><br><span class="line">    <span class="keyword">double</span> n2=<span class="number">3.0</span>;</span><br><span class="line">    <span class="keyword">long</span> n3=<span class="number">2000000000</span>;</span><br><span class="line">    <span class="keyword">long</span> n4=<span class="number">1234567890</span>;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"%.1e %1e %.1e %.1e\n"</span>,n1,n2,n3,n4);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"%ld %ld\n"</span>,n3,n4);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"%ld %ld %ld %ld\n"</span>,n1,n2,n3,n4);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//运行结果</span></span><br><span class="line"><span class="number">3.0e+000</span> <span class="number">3.000000e+000</span> <span class="number">3.1e+046</span> <span class="number">8.5e+257</span></span><br><span class="line"><span class="comment">//第一行，%e输出时，默认目标是double型，会查看8个字节，其实n3是4字节存放的。</span></span><br><span class="line"><span class="number">2000000000</span> <span class="number">1234567890</span></span><br><span class="line"><span class="number">0</span> <span class="number">1074266112</span> <span class="number">0</span> <span class="number">1074266112</span></span><br><span class="line"><span class="comment">//%ld打印浮点数会失败。后面的%ld打印long类型也失败了。是因为函数调用的原因</span></span><br><span class="line"><span class="comment">//传入函数的参数的值被存放在栈里，n1，n2都站8个字节，n3，n4站4个字节，但在按转换符输出的时候，</span></span><br><span class="line"><span class="comment">//%ld是按照4个字节4个字节读取，所以后面的long类型也不能正确输出。</span></span><br></pre></td></tr></table></figure>
+
+<h4><span id="printf-han-shu-fan-hui-zhi">printf函数返回值</span><a href="#printf-han-shu-fan-hui-zhi" class="header-anchor">#</a></h4><p>printf函数输出正确的情况下<strong>返回输出字符的个数，如果输出失败返回一个负值。</strong>可以用来检查输出错误。</p>
+<ul>
+<li>float<code>类型作为printf参数打印时，会被转换成</code>double`类型</li>
+</ul>
+<h4><span id="da-yin-zi-fu-chuan-duan-xing-de-fang-fa">打印字符串断行的方法</span><a href="#da-yin-zi-fu-chuan-duan-xing-de-fang-fa" class="header-anchor">#</a></h4><p>有三种方法：</p>
+<ul>
+<li>多个<code>printf</code>函数出输</li>
+<li>用<code>\</code>断开，下一行不能有缩进</li>
+<li>多个双引号括起来，之间会间隔，不同双引号可以换行，同时可以缩进</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* longstrg.c -- printing long strings */</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"Here's one way to print a "</span>);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"long string.\n"</span>);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"Here's another way to print a \</span></span><br><span class="line"><span class="string">long string.\n"</span>);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"Here's the newest way to print a "</span></span><br><span class="line">          <span class="string">"long string.\n"</span>);      <span class="comment">/* ANSI C */</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Here<span class="number">'</span>s one way to <span class="built_in">print</span> a <span class="keyword">long</span> <span class="built_in">string</span>.</span><br><span class="line">Here<span class="number">'</span>s another way to <span class="built_in">print</span> a <span class="keyword">long</span> <span class="built_in">string</span>.</span><br><span class="line">Here<span class="number">'</span>s the newest way to <span class="built_in">print</span> a <span class="keyword">long</span> <span class="built_in">string</span>.</span><br></pre></td></tr></table></figure>
+
+
+
+<h3><span id="4-5-scanf-han-shu">4.5 scanf（）函数</span><a href="#4-5-scanf-han-shu" class="header-anchor">#</a></h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//input.c---如何使用&amp;</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> age;</span><br><span class="line">    <span class="keyword">float</span> assets;</span><br><span class="line">    <span class="keyword">char</span> pet[<span class="number">30</span>];</span><br><span class="line"></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"Enter your age,assets, and favorite pet.\n"</span>);</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%d %f"</span>,&amp;age,&amp;assets);</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%s"</span>,pet);\\数组后面不加&amp;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"%d $%.2f %s\n"</span>,age,assets,pet);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4><span id="fu-dian-shu-du-qu-de-qu-bie">浮点数读取的区别</span><a href="#fu-dian-shu-du-qu-de-qu-bie" class="header-anchor">#</a></h4><p>对于float类型和double类型，<code>printf</code>都用那几个转换说明，但是scanf()把读点说明符用于float型，对于double类型要使用<code>l</code>进行修饰；</p>
+<h4><span id="du-qu-jian-ge-de-gui-ding">读取间隔的规定</span><a href="#du-qu-jian-ge-de-gui-ding" class="header-anchor">#</a></h4><p>多个输入时候，相互之间的间隔是<strong>至少一个空格，或者换行符或者制表符</strong>。唯一的另外是<code>%c</code>,它会读取每个字符，包括空格</p>
+<h4><span id="du-qu-ji-zhi">读取机制</span><a href="#du-qu-ji-zhi" class="header-anchor">#</a></h4><ul>
+<li><p>scanf会把不符合的字符放回输入，所以下次读取输入时，还是从上一次丢弃的数据开始读取；</p>
+</li>
+<li><p>使用字段宽度时，在到达宽度或者遇到空格时停止</p>
+</li>
+<li><p>如果第一个非空字符是<code>A</code>,<code>scanf</code>会停在那里，把<code>A</code>放回输入，不会赋值给变量，下一次程序读取的字符是<code>A</code>，如果用<code>%d</code>读取，程序将一直无法越过<code>A</code>。</p>
+</li>
+<li><p>如果带多个转换说明读取，在第一个出错的地方结束读取</p>
+</li>
+<li><p><code>%s</code>读取时，跳过空白字符读取直到下一个空白字符停止，也就是只能读取一个单词，固定宽度也无法让它读取多个单词，并且把字符串放进数组以后会自动在结尾加上<code>\0</code>,让其成为字符串。</p>
+</li>
+<li><p><code>getchar()</code>可以读取单个字符，<code>fgets()</code>可以读取带空格的字符串</p>
+</li>
+<li><p>格式字符串中间可以加入普通字符，如<code>scanf(&quot;%d,%d&quot;, &amp;n, &amp;m)</code>,输入时也必将两个数中间加<code>,</code></p>
+</li>
+<li><p><strong><code>scanf(&quot;%c&quot;,&amp;ch)</code>从输入中第一个字符开始读取，二<code>scanf(&quot; %c&quot;,&amp;ch)</code>(%前多一个空格)则从第一个非空字符开始读取。</strong></p>
+</li>
+</ul>
+<ul>
+<li>scanf读取成功会返回读取的项数，没有读取项或者读取的数据类型不匹配时，返回0，检测到文件末尾时，返回EOF。</li>
+</ul>
+<h3><span id="4-6-printf-he-scanf-de-xiu-shi-fu">4.6 printf和scanf的*修饰符</span><a href="#4-6-printf-he-scanf-de-xiu-shi-fu" class="header-anchor">#</a></h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//varwid.c---使用变宽输出字段</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="built_in">width</span>, precision;</span><br><span class="line">    <span class="keyword">int</span> number=<span class="number">256</span>;</span><br><span class="line">    <span class="keyword">double</span> weight=<span class="number">242.6</span>;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"Enter a field width:\n"</span>);</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;<span class="built_in">width</span>);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"The number is:%*d:\n"</span>,<span class="built_in">width</span>,number);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"Now enter a width and a precision:\n"</span>);</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%d %d"</span>,&amp;<span class="built_in">width</span>,&amp;precision);</span><br><span class="line">    <span class="comment">//用*代替宽度格式符合，并用参数的形式传入宽度和精度。</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"Weight=%*.*f\n"</span>,<span class="built_in">width</span>,precision,weight);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"Done!"</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//运行结果</span></span><br><span class="line">Enter a field <span class="built_in">width</span>:</span><br><span class="line"><span class="number">6</span></span><br><span class="line">The number is:   <span class="number">256</span>:</span><br><span class="line">Now enter a <span class="built_in">width</span> <span class="keyword">and</span> a precision:</span><br><span class="line"><span class="number">4</span> <span class="number">6</span></span><br><span class="line">Weight=<span class="number">242.600000</span></span><br><span class="line">Done!</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>scanf中的*的用法不同，放在%和转换符之间时，会使得scanf跳过相应的输出项；</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* skip2.c -- skips over first two integers of input */</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> n;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"Please enter three integers:\n"</span>);</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%*d %*d %d"</span>, &amp;n);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"The last integer was %d\n"</span>, n);</span><br><span class="line">   </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Please enter three integers:</span><br><span class="line"><span class="number">1</span> <span class="number">2</span> <span class="number">3</span></span><br><span class="line">The last integer was <span class="number">3</span></span><br></pre></td></tr></table></figure>
+
+</div><div class="article-tags size-small is-uppercase mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/C-Primer-Plus/">C Primer Plus</a></div><div class="notification is-danger">You need to set <code>install_url</code> to use ShareThis. Please set it in <code>_config.yml</code>.</div></article></div><div class="card"><div class="card-content"><h3 class="menu-label has-text-centered">Gefällt Ihnen der Artikel? Unterstützen Sie den Autor mit</h3><div class="buttons is-centered"><a class="button is-info donate"><span class="icon is-small"><i class="fab fa-alipay"></i></span><span>Alipay</span><span class="qrcode"><img src="/img/zhifubao.jpg" alt="Alipay"></span></a><a class="button is-success donate"><span class="icon is-small"><i class="fab fa-weixin"></i></span><span>Wechat</span><span class="qrcode"><img src="/img/weixin.png" alt="Wechat"></span></a></div></div></div><nav class="post-navigation mt-4 level is-mobile"><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2020/05/04/C-primer-plus-chapter3/"><span class="level-item">C primer plus笔记三</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><!--!--></div><div class="column column-left is-4-tablet is-4-desktop is-4-widescreen  order-1"><div class="card widget"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="is-rounded" src="/img/cyber.jpg" alt="Ultronixon"></figure><p class="title is-size-4 is-block line-height-inherit">Ultronixon</p><p class="is-size-6 is-block">Geophysicist</p><p class="is-size-6 is-flex justify-content-center"><i class="fas fa-map-marker-alt mr-1"></i><span>Tianjin</span></p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">Posts</p><a href="/archives"><p class="title">4</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">Kategorien</p><a href="/categories"><p class="title">0</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">Tag</p><a href="/tags"><p class="title">1</p></a></div></div></nav><div class="level"><a class="level-item button is-primary is-rounded" href="https://github.com/Ultronixon" target="_blank" rel="noopener">Folgen</a></div><div class="level is-mobile"><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Github" href="https://github.com/ppoffice"><i class="fab fa-github"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Facebook" href="https://facebook.com"><i class="fab fa-facebook"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Twitter" href="https://twitter.com"><i class="fab fa-twitter"></i></a></div></div></div><!--!--><div class="card widget"><div class="card-content"><div class="menu"><h3 class="menu-label">Links</h3><ul class="menu-list"><li><a class="level is-mobile is-mobile" href="https://github.com/Ultronixon" target="_blank" rel="noopener"><span class="level-left"><span class="level-item">Github</span></span><span class="level-right"><span class="level-item tag">github.com</span></span></a></li></ul></div></div></div><!--!--><div class="card widget"><div class="card-content"><h3 class="menu-label">Letzte Einträge</h3><article class="media"><div class="media-content size-small"><p><time dateTime="2020-05-06T15:08:01.000Z">2020-05-06</time></p><p class="title is-6"><a class="link-muted" href="/2020/05/06/C-primer-plus-chapter4/">C primer plus笔记四</a></p><p class="is-uppercase"></p></div></article><article class="media"><div class="media-content size-small"><p><time dateTime="2020-05-04T10:26:28.000Z">2020-05-04</time></p><p class="title is-6"><a class="link-muted" href="/2020/05/04/C-primer-plus-chapter3/">C primer plus笔记三</a></p><p class="is-uppercase"></p></div></article><article class="media"><div class="media-content size-small"><p><time dateTime="2020-05-04T06:17:01.000Z">2020-05-04</time></p><p class="title is-6"><a class="link-muted" href="/2020/05/04/C-primer-plus-chapter2/">C primer plus笔记二</a></p><p class="is-uppercase"></p></div></article><article class="media"><div class="media-content size-small"><p><time dateTime="2020-05-03T09:41:31.000Z">2020-05-03</time></p><p class="title is-6"><a class="link-muted" href="/2020/05/03/C-primer-plus-chapter1/">C Primer Plus笔记一</a></p><p class="is-uppercase"></p></div></article></div></div><div class="card widget"><div class="card-content"><div class="menu"><h3 class="menu-label">Archive</h3><ul class="menu-list"><li><a class="level is-mobile is-marginless" href="/archives/2020/05/"><span class="level-start"><span class="level-item">五月 2020</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li></ul></div></div></div><div class="card widget"><div class="card-content"><div class="menu"><h3 class="menu-label">Tags</h3><div class="field is-grouped is-grouped-multiline"><div class="control"><a class="tags has-addons" href="/tags/C-Primer-Plus/"><span class="tag">C Primer Plus</span><span class="tag is-grey-lightest">4</span></a></div></div></div></div></div></div><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/seismic.jpg" alt="Ultronixon&#039;s Blog" height="28"></a><p class="size-small"><span>&copy; 2020 tll</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script>moment.locale("zh-cn");</script><script>var IcarusThemeSettings = {
+            site: {
+                url: 'http://yoursite.com',
+                external_link: {"enable":true,"exclude":[]}
+            },
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script src="/js/animation.js"></script><a id="back-to-top" title="Zurück nach oben" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><script type="text/x-mathjax-config">MathJax.Hub.Config({
+            'HTML-CSS': {
+                matchFontHeight: false
+            },
+            SVG: {
+                matchFontHeight: false
+            },
+            CommonHTML: {
+                matchFontHeight: false
+            },
+            tex2jax: {
+                inlineMath: [
+                    ['$','$'],
+                    ['\\(','\\)']
+                ]
+            }
+        });</script><script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="Tippen Sie etwas..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"Tippen Sie etwas...","untitled":"(Untitled)","posts":"Posts","pages":"Pages","categories":"Kategorien","tags":"Tags"});
+        });</script></body></html>

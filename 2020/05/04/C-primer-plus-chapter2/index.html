@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="generator" content="Hexo 4.2.0"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>C primer plus笔记二 - Ultronixon&#039;s Blog</title><meta description="第二章 C语言的概述     2.1 main函数写法 2.2 注释 2.3 声明 2.4 赋值 2.5 实参和形参 2.6 return语句 2.7 提高程序可读性的技巧 2.8 程序的状态 2.9 关键字和保留标识符"><meta property="og:type" content="blog"><meta property="og:title" content="C primer plus笔记二"><meta property="og:url" content="http://yoursite.com/2020/05/04/C-primer-plus-chapter2/"><meta property="og:site_name" content="Ultronixon&#039;s Blog"><meta property="og:description" content="第二章 C语言的概述     2.1 main函数写法 2.2 注释 2.3 声明 2.4 赋值 2.5 实参和形参 2.6 return语句 2.7 提高程序可读性的技巧 2.8 程序的状态 2.9 关键字和保留标识符"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="http://yoursite.com/img/cyber2.jpg"><meta property="article:published_time" content="2020-05-04T06:17:01.000Z"><meta property="article:modified_time" content="2020-05-04T10:35:13.253Z"><meta property="article:author" content="tll"><meta property="article:tag" content="C Primer Plus"><meta property="twitter:card" content="summary"><meta property="twitter:image" content="/img/cyber2.jpg"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://yoursite.com/2020/05/04/C-primer-plus-chapter2/"},"headline":"Ultronixon's Blog","image":["http://yoursite.com/img/cyber.jpg"],"datePublished":"2020-05-04T06:17:01.000Z","dateModified":"2020-05-04T10:35:13.253Z","author":{"@type":"Person","name":"tll"},"description":"第二章 C语言的概述     2.1 main函数写法 2.2 注释 2.3 声明 2.4 赋值 2.5 实参和形参 2.6 return语句 2.7 提高程序可读性的技巧 2.8 程序的状态 2.9 关键字和保留标识符"}</script><link rel="canonical" href="http://yoursite.com/2020/05/04/C-primer-plus-chapter2/"><link rel="icon" href="/img/cyber.jpg"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/monokai.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oxanium:wght@300;400;600&amp;family=Roboto+Mono"><link rel="stylesheet" href="/css/cyberpunk.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css"><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/seismic.jpg" alt="Ultronixon&#039;s Blog" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/tags">Tags</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/Ultronixon"><i class="fab fa-github"></i></a><a class="navbar-item search" title="Suche" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta size-small is-uppercase level is-mobile"><div class="level-left"><time class="level-item" dateTime="2020-05-04T06:17:01.000Z" title="2020-05-04T06:17:01.000Z">2020-05-04</time><span class="level-item">5 分钟 lesen (Über 782 Worte)</span></div></div><h1 class="title is-3 is-size-4-mobile">C primer plus笔记二</h1><div class="content"><p><img src="https://gitee.com//ultronixon/img/raw/master/img/timg-1588523019372.jpg" alt></p>
+<h1><span id="di-er-zhang-c-yu-yan-de-gai-shu">第二章 C语言的概述</span><a href="#di-er-zhang-c-yu-yan-de-gai-shu" class="header-anchor">#</a></h1><div class="toc">
+
+<!-- toc -->
+
+<ul>
+<li><a href="#2-1-main-han-shu-xie-fa">2.1 main函数写法</a></li>
+<li><a href="#2-2-zhu-shi">2.2 注释</a></li>
+<li><a href="#2-3-sheng-ming">2.3 声明</a></li>
+<li><a href="#2-4-fu-zhi">2.4 赋值</a></li>
+<li><a href="#2-5-shi-can-he-xing-can">2.5 实参和形参</a></li>
+<li><a href="#2-6-return-yu-ju">2.6 return语句</a></li>
+<li><a href="#2-7-ti-gao-cheng-xu-ke-du-xing-de-ji-qiao">2.7 提高程序可读性的技巧</a></li>
+<li><a href="#2-8-cheng-xu-de-zhuang-tai">2.8 程序的状态</a></li>
+<li><a href="#2-9-guan-jian-zi-he-bao-liu-biao-shi-fu">2.9 关键字和保留标识符</a></li>
+</ul>
+<!-- tocstop -->
+
+</div>
+<a id="more"></a>
+
+<h3><span id="2-1-main-han-shu-xie-fa">2.1 main函数写法</span><a href="#2-1-main-han-shu-xie-fa" class="header-anchor">#</a></h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br></pre></td></tr></table></figure>
+
+<p>是现在的C标准的写法。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">main()</span><br></pre></td></tr></table></figure>
+
+<p>C90可以勉强接受这样的写法，但是C99和C11都不允许这样写</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">main</span><span class="params">()</span></span></span><br></pre></td></tr></table></figure>
+
+<p>有些编译器允许这么写，但是所有的标准都没有认可过这样的写法，不可取。</p>
+<h3><span id="2-2-zhu-shi">2.2 注释</span><a href="#2-2-zhu-shi" class="header-anchor">#</a></h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*注释主要是提供程序的可读性*/</span></span><br><span class="line"><span class="comment">/*多行</span></span><br><span class="line"><span class="comment">--------------</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//单行注释，避免注释标注的丢失。只有C99和C11才支持这一特性。</span></span><br></pre></td></tr></table></figure>
+
+<h3><span id="2-3-sheng-ming">2.3 声明</span><a href="#2-3-sheng-ming" class="header-anchor">#</a></h3><p>C语言中变量必须先声明，再使用。</p>
+<p>这样做由一下几个原因：</p>
+<p>1、把所有的变量放在一起（C99和C11以前的规则是把声明放在块的顶部，C99和C11允许在任何位置进行声明，只要是在变量使用之前）有助于读者查找和理解程序的用途。尤其是变量名字有意义的时候。</p>
+<p>2,、声明变量能够促使我们在编程之前做计划。</p>
+<p>3、声明变量有助于发现隐藏在程序中的小错误。</p>
+<p>4、如果不声明，程序无法通过编译。</p>
+<h3><span id="2-4-fu-zhi">2.4 赋值</span><a href="#2-4-fu-zhi" class="header-anchor">#</a></h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> num;</span><br><span class="line">num=<span class="number">1</span>;</span><br></pre></td></tr></table></figure>
+
+<p>在执行变量声明时，编译器在计算机内存中为num预留了空间，执行赋值表达式语句时，把值储存在之前预留的位置。</p>
+<h3><span id="2-5-shi-can-he-xing-can">2.5 实参和形参</span><a href="#2-5-shi-can-he-xing-can" class="header-anchor">#</a></h3><p><strong>实际参数</strong>是传递给函数的特定值；</p>
+<p><strong>形式参数</strong>是函数用于储存值得变量。</p>
+<h3><span id="2-6-return-yu-ju">2.6 return语句</span><a href="#2-6-return-yu-ju" class="header-anchor">#</a></h3><p>如果遗漏<code>main()</code>函数中的return语句，程序在运行至最外面的右花括号（}）的时候会返回<code>0</code>。所以在main函数中是可以遗漏的，但是其他非void声明的函数不能遗漏，但是为了保持良好的编码习惯，最后都不要以后return语句。</p>
+<h3><span id="2-7-ti-gao-cheng-xu-ke-du-xing-de-ji-qiao">2.7 提高程序可读性的技巧</span><a href="#2-7-ti-gao-cheng-xu-ke-du-xing-de-ji-qiao" class="header-anchor">#</a></h3><p>1、选择有意义的函数名和变量名，并写注释，两者相互配合，避免重复啰嗦。</p>
+<p>2、在函数中用空行隔开概念上的多个部分。</p>
+<p>3、每条语句各占一行。</p>
+<h3><span id="2-8-cheng-xu-de-zhuang-tai">2.8 程序的状态</span><a href="#2-8-cheng-xu-de-zhuang-tai" class="header-anchor">#</a></h3><p>1、可以跟踪一小部分循环，看看程序是否按照预期的方式执行，</p>
+<p>2、定位语义错误还可以在程序中的关键部位插入额外的<code>printf()</code>语句，以监视制定变量值得变换。</p>
+<p>3、使用调试器。</p>
+<h3><span id="2-9-guan-jian-zi-he-bao-liu-biao-shi-fu">2.9 关键字和保留标识符</span><a href="#2-9-guan-jian-zi-he-bao-liu-biao-shi-fu" class="header-anchor">#</a></h3><p>下表为ISO C关键字。粗体为C90新增的，斜体为C99新增的，粗斜体为C11新增的。</p>
+<table>
+<thead>
+<tr>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>auto</td>
+<td>extern</td>
+<td>short</td>
+<td>while</td>
+</tr>
+<tr>
+<td>break</td>
+<td>float</td>
+<td><strong>signed</strong></td>
+<td><strong><em>_Alignas</em></strong></td>
+</tr>
+<tr>
+<td>case</td>
+<td>for</td>
+<td>sizeof</td>
+<td><strong><em>_Alignof</em></strong></td>
+</tr>
+<tr>
+<td>char</td>
+<td>goto</td>
+<td>static</td>
+<td><strong><em>_Atomic</em></strong></td>
+</tr>
+<tr>
+<td><strong>const</strong></td>
+<td>if</td>
+<td>struct</td>
+<td><strong><em>_Bool</em></strong></td>
+</tr>
+<tr>
+<td>continue</td>
+<td><em>inline</em></td>
+<td>switch</td>
+<td><strong><em>_complex</em></strong></td>
+</tr>
+<tr>
+<td>default</td>
+<td>int</td>
+<td>typedef</td>
+<td><strong><em>_Generic</em></strong></td>
+</tr>
+<tr>
+<td>do</td>
+<td>long</td>
+<td>union</td>
+<td><strong><em>_Imaginary</em></strong></td>
+</tr>
+<tr>
+<td>double</td>
+<td>register</td>
+<td>unsigned</td>
+<td><strong><em>_Noreturn</em></strong></td>
+</tr>
+<tr>
+<td>else</td>
+<td>restrict</td>
+<td>void</td>
+<td><strong><em>_Static_assert</em></strong></td>
+</tr>
+<tr>
+<td><strong>enum</strong></td>
+<td>return</td>
+<td><strong>volatile</strong></td>
+<td><strong><em>_Thread_local</em></strong></td>
+</tr>
+</tbody></table>
+<p><strong>关键字是C的词汇</strong>。变量命令和函数命名应该避开，以免引起歧义。</p>
+</div><div class="article-tags size-small is-uppercase mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/C-Primer-Plus/">C Primer Plus</a></div><div class="notification is-danger">You need to set <code>install_url</code> to use ShareThis. Please set it in <code>_config.yml</code>.</div></article></div><div class="card"><div class="card-content"><h3 class="menu-label has-text-centered">Gefällt Ihnen der Artikel? Unterstützen Sie den Autor mit</h3><div class="buttons is-centered"><a class="button is-info donate"><span class="icon is-small"><i class="fab fa-alipay"></i></span><span>Alipay</span><span class="qrcode"><img src="/img/zhifubao.jpg" alt="Alipay"></span></a><a class="button is-success donate"><span class="icon is-small"><i class="fab fa-weixin"></i></span><span>Wechat</span><span class="qrcode"><img src="/img/weixin.png" alt="Wechat"></span></a></div></div></div><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/2020/05/04/C-primer-plus-chapter3/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">C primer plus笔记三</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2020/05/03/C-primer-plus-chapter1/"><span class="level-item">C Primer Plus笔记一</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><!--!--></div><div class="column column-left is-4-tablet is-4-desktop is-4-widescreen  order-1"><div class="card widget"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="is-rounded" src="/img/cyber.jpg" alt="Ultronixon"></figure><p class="title is-size-4 is-block line-height-inherit">Ultronixon</p><p class="is-size-6 is-block">Geophysicist</p><p class="is-size-6 is-flex justify-content-center"><i class="fas fa-map-marker-alt mr-1"></i><span>Tianjin</span></p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">Posts</p><a href="/archives"><p class="title">4</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">Kategorien</p><a href="/categories"><p class="title">0</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">Tag</p><a href="/tags"><p class="title">1</p></a></div></div></nav><div class="level"><a class="level-item button is-primary is-rounded" href="https://github.com/Ultronixon" target="_blank" rel="noopener">Folgen</a></div><div class="level is-mobile"><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Github" href="https://github.com/ppoffice"><i class="fab fa-github"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Facebook" href="https://facebook.com"><i class="fab fa-facebook"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Twitter" href="https://twitter.com"><i class="fab fa-twitter"></i></a></div></div></div><!--!--><div class="card widget"><div class="card-content"><div class="menu"><h3 class="menu-label">Links</h3><ul class="menu-list"><li><a class="level is-mobile is-mobile" href="https://github.com/Ultronixon" target="_blank" rel="noopener"><span class="level-left"><span class="level-item">Github</span></span><span class="level-right"><span class="level-item tag">github.com</span></span></a></li></ul></div></div></div><!--!--><div class="card widget"><div class="card-content"><h3 class="menu-label">Letzte Einträge</h3><article class="media"><div class="media-content size-small"><p><time dateTime="2020-05-06T15:08:01.000Z">2020-05-06</time></p><p class="title is-6"><a class="link-muted" href="/2020/05/06/C-primer-plus-chapter4/">C primer plus笔记四</a></p><p class="is-uppercase"></p></div></article><article class="media"><div class="media-content size-small"><p><time dateTime="2020-05-04T10:26:28.000Z">2020-05-04</time></p><p class="title is-6"><a class="link-muted" href="/2020/05/04/C-primer-plus-chapter3/">C primer plus笔记三</a></p><p class="is-uppercase"></p></div></article><article class="media"><div class="media-content size-small"><p><time dateTime="2020-05-04T06:17:01.000Z">2020-05-04</time></p><p class="title is-6"><a class="link-muted" href="/2020/05/04/C-primer-plus-chapter2/">C primer plus笔记二</a></p><p class="is-uppercase"></p></div></article><article class="media"><div class="media-content size-small"><p><time dateTime="2020-05-03T09:41:31.000Z">2020-05-03</time></p><p class="title is-6"><a class="link-muted" href="/2020/05/03/C-primer-plus-chapter1/">C Primer Plus笔记一</a></p><p class="is-uppercase"></p></div></article></div></div><div class="card widget"><div class="card-content"><div class="menu"><h3 class="menu-label">Archive</h3><ul class="menu-list"><li><a class="level is-mobile is-marginless" href="/archives/2020/05/"><span class="level-start"><span class="level-item">五月 2020</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li></ul></div></div></div><div class="card widget"><div class="card-content"><div class="menu"><h3 class="menu-label">Tags</h3><div class="field is-grouped is-grouped-multiline"><div class="control"><a class="tags has-addons" href="/tags/C-Primer-Plus/"><span class="tag">C Primer Plus</span><span class="tag is-grey-lightest">4</span></a></div></div></div></div></div></div><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/seismic.jpg" alt="Ultronixon&#039;s Blog" height="28"></a><p class="size-small"><span>&copy; 2020 tll</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script>moment.locale("zh-cn");</script><script>var IcarusThemeSettings = {
+            site: {
+                url: 'http://yoursite.com',
+                external_link: {"enable":true,"exclude":[]}
+            },
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script src="/js/animation.js"></script><a id="back-to-top" title="Zurück nach oben" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><script type="text/x-mathjax-config">MathJax.Hub.Config({
+            'HTML-CSS': {
+                matchFontHeight: false
+            },
+            SVG: {
+                matchFontHeight: false
+            },
+            CommonHTML: {
+                matchFontHeight: false
+            },
+            tex2jax: {
+                inlineMath: [
+                    ['$','$'],
+                    ['\\(','\\)']
+                ]
+            }
+        });</script><script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="Tippen Sie etwas..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"Tippen Sie etwas...","untitled":"(Untitled)","posts":"Posts","pages":"Pages","categories":"Kategorien","tags":"Tags"});
+        });</script></body></html>
